@@ -139,3 +139,27 @@ public static int rodCutting(int valueOfLength[], int start, int length) {
 		return Math.max(rodCutting(valueOfLength, start+1, length), 
 				valueOfLength[start] + rodCutting(valueOfLength, 0, length-start-1));
 	}
+
+
+
+public static int rodCuttingMemoized(int valueOfLength[], int start, int length, int T[][]) {
+		
+		if(start >= length) {
+			
+			return 0;
+		}
+		
+		if(start == length-1) {
+			
+			return valueOfLength[length-1];
+		}
+		
+		if(T[start][length] != -1) {
+			
+			return T[start][length];
+		}
+		
+		return T[start][length] = 
+				Math.max(rodCuttingMemoized(valueOfLength, start+1, length, T), 
+				valueOfLength[start] + rodCuttingMemoized(valueOfLength, 0, length-start-1, T));
+	}
