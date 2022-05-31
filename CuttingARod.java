@@ -102,3 +102,40 @@ public class CuttingARod {
 					maxValueRodCutting(price, lengthOfRod, n-1));
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+NOTE ----------------------------
+	
+ANOTHER RECURSIVE & MEMOIZED SOLUTION (SIMPLER):
+
+
+public static int rodCutting(int valueOfLength[], int start, int length) {
+		
+		if(start >= length) {
+			
+			return 0;
+		}
+		
+		if(start == length-1) {
+			
+			return valueOfLength[length-1];
+		}
+		
+		// Starting from the beginning. There can be only 2 possibilities: a) A cut is made.  b) A cut is not made
+		// We are considering both the cases here to find the MAXIMUM from them.
+		return Math.max(rodCutting(valueOfLength, start+1, length), 
+				valueOfLength[start] + rodCutting(valueOfLength, 0, length-start-1));
+	}
