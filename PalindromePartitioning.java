@@ -43,32 +43,52 @@ public class PalindromePartitioning {
 		return 1;
 	}
 	
-public static int solutionMemoized(String str, int start, int end, int T[][]) {
+public static int minCutsPalindromePartitoning(String str, int start, int end, int T[][]) {
 		
-		if(start >= end) {
+		if(start > end) {
+			return 99999;
+		}
+		
+		if(start == end) {
 			
 			return 0;
 		}
 		
-		if(isPalindrome(str, start, end) == 1) {
+		if(isPalindrome(str, start, end) == true) {
 			
 			return 0;
 		}
 		
-		int min = Integer.MAX_VALUE;
+		
+		if(T[start][end] != -1) {
+			
+			return T[start][end];
+		}
+		
+		
+		int minCuts = Integer.MAX_VALUE;
 		
 		for(int k = start; k<end; k++) {
 			
-			int temp1 = solutionMemoized(str, start, k, T);
-			int temp2 = solutionMemoized(str, k+1, end, T);
+			T[start][k] = minCutsPalindromePartitoning(str, start, k, T);
+			T[k+1][end] = minCutsPalindromePartitoning(str, k+1, end, T);
 			
-			int temp = 1 + temp1 + temp2;
+			int temp = 
+					1 
+					+ T[start][k]
+					+ T[k+1][end];
 			
-			min = Math.min(min, temp);
+			if(temp < minCuts) {
+				
+				minCuts = temp;
+			}
 		}
 		
-		return min;
+		
+		return minCuts;
 	}
+	
+	
 	
 	public static int solution(String str, int start, int end) {
 		
